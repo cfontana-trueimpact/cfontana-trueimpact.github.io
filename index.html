@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partner Portal – TrueImpact Widget (alpha)</title>
+  <style>
+    :root{
+      --nav:#0b3a6f;
+      --navText:#fff;
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --accent:#5b7cff;
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:#111827}
+    .topnav{background:var(--nav);color:var(--navText);padding:10px 20px;display:flex;align-items:center;gap:16px}
+    .brand{font-weight:700;letter-spacing:.2px}
+    .navlinks{display:flex;gap:16px;margin-left:auto}
+    .navlinks a{color:var(--navText);text-decoration:none;opacity:.9}
+    .navlinks a:hover{opacity:1;text-decoration:underline}
+    .page{max-width:1200px;margin:0 auto;padding:20px}
+    .title{display:flex;justify-content:space-between;align-items:center;margin:14px 0 12px}
+    h1{font-size:28px;margin:0}
+    .rating{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:12px}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+    .card h2{font-size:20px;margin:0 0 8px}
+    .card p{color:var(--muted);margin:0 0 12px}
+    .cta{background:#eef2ff;border-color:#e0e7ff}
+    iframe{width:100%;border:1px solid var(--border);border-radius:12px;height:780px;background:#fff}
+    .note{font-size:13px;color:var(--muted);margin-top:8px}
+  </style>
+</head>
+<body>
+  <nav class="topnav" aria-label="main">
+    <div class="brand">Partner Portal</div>
+    <div class="navlinks">
+      <a href="#">Dashboard</a>
+      <a href="#">Update Profile</a>
+      <a href="#">Team</a>
+      <a href="#">Resources</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="title">
+      <h1>DonorsChoose</h1>
+      <div class="rating" aria-label="rating summary">
+        <strong>100%</strong>
+        <span class="muted">Four‑Star Charity</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="col">
+        <div class="card">
+          <h2>Impact & Measurement</h2>
+          <p>Embedded TrueImpact Report Builder inside the partner portal.</p>
+          <iframe
+            id="tiFrame"
+            title="TrueImpact Report Builder"
+            src="https://alpha.trueimpact.com/npo/report-builder/23%20Jan%20Program%202024/50402"
+            loading="lazy"
+            allow="clipboard-write"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+          <p class="note">Auto‑height will work when the embedded app sends a <code>postMessage</code> with the height. For now, fixed height is used.</p>
+        </div>
+
+        <div class="card">
+          <h2>Accountability & Finance</h2>
+          <p>Example card (partner content).</p>
+        </div>
+
+        <div class="card">
+          <h2>Leadership & Adaptability</h2>
+          <p>Example card (partner content).</p>
+        </div>
+      </section>
+
+      <aside class="col">
+        <div class="card">
+          <h2>Overall Score</h2>
+          <p style="font-size:40px;margin:8px 0 0"><strong>100%</strong></p>
+        </div>
+        <div class="card cta">
+          <h2>Webinars for Nonprofits</h2>
+          <p>Bi‑monthly series with CFRE credits.</p>
+          <button>Sign Up</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const WIDGET_ORIGIN = "https://alpha.trueimpact.com";
+    const iframe = document.getElementById('tiFrame');
+
+    iframe.addEventListener('load', () => {
+      try { iframe.contentWindow.postMessage({ type: 'ti:hello' }, WIDGET_ORIGIN); } catch {}
+    });
+
+    window.addEventListener('message', (event) => {
+      if (event.origin !== WIDGET_ORIGIN) return;
+      const data = event.data || {};
+      if (data.type === 'ti:resize' && typeof data.height === 'number') {
+        const safe = Math.max(400, Math.min(data.height, 3000));
+        iframe.style.height = safe + 'px';
+      }
+      if (data.type === 'ti:event') console.log('[Widget event]', data.name, data.payload);
+      if (data.type === 'ti:error') console.error('[Widget error]', data.message);
+    });
+  </script>
+</body>
+</html>
