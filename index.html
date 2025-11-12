@@ -1,138 +1,165 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Partner Portal – TrueImpact Widget (alpha)</title>
   <style>
- :root{
-  --nav:#0b3a6f;
-  --navText:#fff;
-  --bg:#f6f7fb;
-  --card:#ffffff;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --accent:#5b7cff;
-  --radius:16px;
-}
+    :root {
+      --nav: #0b3a6f;
+      --navText: #fff;
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #5b7cff;
+      --radius: 16px;
+    }
 
-*{box-sizing:border-box}
+    * {
+      box-sizing: border-box
+    }
 
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:var(--bg);
-  color:#111827;
-}
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: var(--bg);
+      color: #111827;
+    }
 
-.topnav{
-  background:var(--nav);
-  color:var(--navText);
-  padding:10px 20px;
-  display:flex;
-  align-items:center;
-  gap:16px;
-}
+    .topnav {
+      background: var(--nav);
+      color: var(--navText);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-.brand{
-  font-weight:700;
-  letter-spacing:.2px;
-}
+    .brand {
+      font-weight: 700;
+      letter-spacing: .2px
+    }
 
-.navlinks{
-  display:flex;
-  gap:16px;
-  margin-left:auto;
-}
+    .navlinks {
+      display: flex;
+      gap: 14px;
+      margin-left: auto
+    }
 
-.navlinks a{
-  color:var(--navText);
-  text-decoration:none;
-  opacity:.9;
-}
+    .navlinks a {
+      color: var(--navText);
+      text-decoration: none;
+      opacity: .9
+    }
 
-.navlinks a:hover{
-  opacity:1;
-  text-decoration:underline;
-}
+    .navlinks a:hover {
+      opacity: 1;
+      text-decoration: underline
+    }
 
-.page{
-  max-width:100%;
-  min-width:1000px;
-  margin:0 auto;
-  padding:20px;
-}
+    .page {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 14px;
+    }
 
-.title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:14px 0 12px;
-}
+    .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 0 10px;
+    }
 
-h1{
-  font-size:28px;
-  margin:0;
-}
+    h1 {
+      font-size: 26px;
+      margin: 0
+    }
 
-.rating{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:14px 16px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
+    .rating {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 320px;
-  gap:20px;
-}
+    /* Sidebar siempre a la derecha, más chico pero visible */
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(180px, 16vw, 220px);
+      gap: 12px;
+    }
 
-@media (max-width: 980px){
-  .grid{grid-template-columns:1fr}
-}
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
 
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:18px;
-}
+    .card h2 {
+      font-size: 18px;
+      margin: 0 0 6px
+    }
 
-.card h2{
-  font-size:20px;
-  margin:0 0 8px;
-}
+    .card p {
+      color: var(--muted);
+      margin: 0 0 10px;
+      font-size: 14px
+    }
 
-.card p{
-  color:var(--muted);
-  margin:0 0 12px;
-}
+    .cta {
+      background: #eef2ff;
+      border-color: #e0e7ff
+    }
 
-.cta{
-  background:#eef2ff;
-  border-color:#e0e7ff;
-}
+    iframe {
+      width: 100%;
+      max-width: 100%;
+      min-width: 950px;
+      /* objetivo en desktop */
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      height: 780px;
+      background: #fff;
+    }
 
-iframe{
-  width:100%;
-  min-width:1000px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  height:780px;
-  background:#fff;
-}
+    .note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px
+    }
 
-.note{
-  font-size:13px;
-  color:var(--muted);
-  margin-top:8px;
-}
+    /* Cuando la ventana es más chica, relajamos el min del iframe
+   para que entren iframe + sidebar sin scroll horizontal */
+    @media (max-width: 1200px) {
+      iframe {
+        min-width: 0
+      }
+    }
+
+    /* Ajustes finos del sidebar en pantallas medianas */
+    @media (max-width: 1100px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr) clamp(160px, 18vw, 200px)
+      }
+
+      .card h2 {
+        font-size: 17px
+      }
+
+      .card p {
+        font-size: 13px
+      }
+    }
   </style>
 </head>
+
 <body>
   <nav class="topnav" aria-label="main">
     <div class="brand">Partner Portal</div>
@@ -158,16 +185,11 @@ iframe{
         <div class="card">
           <h2>Impact & Measurement</h2>
           <p>Embedded TrueImpact Report Builder inside the partner portal.</p>
-          <iframe
-            id="tiFrame"
-            title="TrueImpact Report Builder"
-            src="https://uat.trueimpact.com/cn-widget"
-            loading="lazy"
-            allow="clipboard-write"
-            sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
-            referrerpolicy="strict-origin-when-cross-origin"
-          ></iframe>
-          <p class="note">Auto‑height will work when the embedded app sends a <code>postMessage</code> with the height. For now, fixed height is used.</p>
+          <iframe id="tiFrame" title="TrueImpact Report Builder" src="https://uat.trueimpact.com/cn-widget"
+            loading="lazy" allow="clipboard-write" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <p class="note">Auto‑height will work when the embedded app sends a <code>postMessage</code> with the height.
+            For now, fixed height is used.</p>
         </div>
 
         <div class="card">
@@ -200,7 +222,7 @@ iframe{
     const iframe = document.getElementById('tiFrame');
 
     iframe.addEventListener('load', () => {
-      try { iframe.contentWindow.postMessage({ type: 'ti:hello' }, WIDGET_ORIGIN); } catch {}
+      try { iframe.contentWindow.postMessage({ type: 'ti:hello' }, WIDGET_ORIGIN); } catch { }
     });
 
     window.addEventListener('message', (event) => {
@@ -215,4 +237,5 @@ iframe{
     });
   </script>
 </body>
+
 </html>
